@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Header from "../components/Header";
 import style from "../assets/styles/Home.module.scss";
-import fetchShips, { Ships } from "../services/getDataOfAllShips";
+import fetchShips from "../services/getDataOfAllShips";
 import { useState, useEffect } from "react";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { ToastContainer, toast } from "react-toastify";
