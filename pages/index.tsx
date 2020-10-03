@@ -1,10 +1,11 @@
 import Head from "next/head";
 import Header from "../components/Header";
-import style from "./../assets/styles/Home.module.scss";
-import fetchShips, { Ships } from "./../services/getDataOfAllShips";
+import style from "../assets/styles/Home.module.scss";
+import fetchShips, { Ships } from "../services/getDataOfAllShips";
 import { useState, useEffect } from "react";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { ToastContainer, toast } from "react-toastify";
+import yoda from '../public/static/images/yoda.png';
 
 const Home = () => {
   const [distance, setDistance] = useState("");
@@ -76,6 +77,8 @@ const Home = () => {
             Input the distance in mega lights (MGTL) and we'll calculate how
             many stops you need to complete your journey.
           </p>
+
+          <img src={yoda} alt="Baby yoda"/>
         </div>
 
         <div className={`${style.col} ${style.center}`}>
