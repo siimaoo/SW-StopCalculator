@@ -6,7 +6,8 @@ const fetchShips = async (page: number): Promise<Ships> => {
 
 export interface Ships {
   next: string | null,
-  results: Array<object>
+  results: Array<object>,
+  name: string
 }
 
 export default fetchShips;

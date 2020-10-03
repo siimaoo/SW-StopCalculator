@@ -1,11 +1,10 @@
 import Head from "next/head";
 import Header from "../components/Header";
 import style from "./../assets/styles/Home.module.scss";
-import fetchShips, { Ships } from './../services/getDataOfAllShips';
+import fetchShips, { Ships } from "./../services/getDataOfAllShips";
 import { useState, useEffect } from "react";
-import { AiOutlineCalculator } from "react-icons/ai";
-import { ToastContainer, toast } from 'react-toastify';
-
+import { IoIosArrowRoundForward } from "react-icons/io";
+import { ToastContainer, toast } from "react-toastify";
 
 const Home = () => {
   const [distance, setDistance] = useState("");
@@ -23,7 +22,8 @@ const Home = () => {
     years: 8760,
   };
 
-  const calculateStops = () => {
+  const calculateStops = e => {
+    e.preventDefault();
     const arr = [];
 
     ships.map((ship) => {
@@ -46,14 +46,15 @@ const Home = () => {
 
   const getDataOfAllShips = async (page: number) => {
     try {
-      const data:Ships = await fetchShips(page);
+      const { data } = await fetchShips(page);
       const arr = ships;
       arr.push(...data.results);
       setShips(arr);
-
       if (data.next != null) getDataOfAllShips(page += 1);
-    } catch (e) {
-      toast("Oops 😭 Something wen't wrong. Please try again later.", {type: 'error'});
+    } catch (err) {
+      toast("Oops 😭 Something wen't wrong. Please try again later.", {
+        type: "error",
+      });
     }
   };
 
@@ -68,36 +69,43 @@ const Home = () => {
       <ToastContainer position="bottom-right" />
 
       <div className={style.container}>
-        <div className={style.card}>
-          <h4>Input the distance in mega lights (MGLT)</h4>
+        <div className={style.col}>
+          <h1>Welcome to Stops Calculator</h1>
 
-          <div>
-            <input
-              type="text"
-              value={distance}
-              onChange={(e) => setDistance(e.target.value)}
-            />
-
-            <AiOutlineCalculator
-              className={style.icon}
-              onClick={calculateStops}
-            />
-          </div>
+          <p>
+            Input the distance in mega lights (MGTL) and we'll calculate how
+            many stops you need to complete your journey.
+          </p>
         </div>
 
-        <div className={style.card}>
-          {wasCalculated ? (
-            ships.map((ship, index) => {
-              return (
-                <div key={index} className={style.card_item}>
-                  <h5>{ship.name}:</h5>
-                  <p>{Math.floor(ship.stops)}</p>
-                </div>
-              );
-            })
-          ) : (
-            <h3>Aguardando dados...</h3>
-          )}
+        <div className={`${style.col} ${style.center}`}>
+          <div className={style.card}>
+            <form onSubmit={calculateStops}>
+              <input
+                type="text"
+                value={distance}
+                onChange={(e) => setDistance(e.target.value)}
+              />
+
+              <IoIosArrowRoundForward
+                className={style.icon}
+                onClick={calculateStops}
+              />
+            </form>
+          </div>
+
+          <div className={`${style.card} ${style.scroll}`}>
+            {wasCalculated ? (
+              ships.map((ship, index) => {
+                return (
+                  <div key={index} className={style.card_item}>
+                    <h4>{ship.name}:</h4>
+                    <p>{Math.floor(ship.stops)}</p>
+                  </div>
+                );
+              })
+            ) : null}
+          </div>
         </div>
       </div>
     </>
