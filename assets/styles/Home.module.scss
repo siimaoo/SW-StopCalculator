@@ -45,6 +45,7 @@
 
     @media (max-width: 900px) {
       margin: 10px 0;
+      font-size: 2rem;
     }
   }
 
@@ -56,6 +57,8 @@
 
     @media (max-width: 900px) {
       margin: 30px 0;
+      font-size: 0.8rem;
+      margin-top: 10px;
     }
   }
 
@@ -87,6 +90,10 @@
     &.scroll {
       overflow: auto;
       height: 80vh;
+
+      @media (max-width: 900px) {
+        height: 50vh;
+      }
     }
 
     .card_item {
